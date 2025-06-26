@@ -6,6 +6,7 @@ import tseslint from "typescript-eslint";
 import unusedImports from "eslint-plugin-unused-imports";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import importPlugin from "eslint-plugin-import";
+import boundaries from "eslint-plugin-boundaries";
 
 // During the workshop this can be set to "false" in order to not
 // get annoying messages due to import statements in wrong order
@@ -35,6 +36,19 @@ export default tseslint.config(
       "unused-imports": unusedImports,
       "simple-import-sort": simpleImportSort,
       import: importPlugin,
+      boundaries,
+    },
+    settings: {
+      "boundaries/elements": [
+        /* todo 'src' entfernen, deine Pattern hier eintragen für die Typen mit
+         * den entsprechenden Pattern:
+         *
+         *   plant-list
+         *   plant-form
+         *   shared
+         */
+        { type: "src", pattern: "src/*" },
+      ],
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -52,6 +66,16 @@ export default tseslint.config(
       "@typescript-eslint/method-signature-style": "off",
       "prefer-const": "off",
       ...importRules,
+      "boundaries/element-types": [
+        "error",
+        {
+          // todo: 'default' auf 'disallow' setzen
+          default: "allow",
+          rules: [
+            /* todo: deine Regel eintragen */
+          ],
+        },
+      ],
     },
   },
 );

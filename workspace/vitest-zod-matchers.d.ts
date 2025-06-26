@@ -2,7 +2,10 @@ import "vitest";
 
 interface CustomMatchers<R = unknown> {
   toBeZodSuccess(expected?: any): R;
-  toBeZodFailure(expectedErrorMessage?: string | RegExp): R;
+  toBeZodFailure(
+    expectedErrorMessage?: string | RegExp,
+    path?: string | string[],
+  ): R;
 }
 
 declare module "vitest" {

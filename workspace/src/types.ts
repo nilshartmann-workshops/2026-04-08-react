@@ -1,18 +1,7 @@
-export type TimeRange = {
-  start: string;
-  end: string;
-};
-
-export type Reservation = {
+export type Plant = {
   id: string;
-  foodTruck: string;
-  customerName: string;
-  timeRange: TimeRange;
-  expectedGuests: number;
-  specialRequests?: string;
-  status: ReservationStatus;
+  name: string;
+  location: string;
+  wateringInterval: number;
+  lastWatered?: string;
 };
-
-export type ReservationStatus = "Requested" | "Confirmed" | "Rejected";
-
-export type OrderBy = "foodTruck" | "status" | "customerName" | "start" | "";

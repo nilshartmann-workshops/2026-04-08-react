@@ -7,7 +7,7 @@ dayjs.extend(customParseFormat);
 
 const connectedClients = []; // Array to store connected clients for SSE
 
-const isValidDate = (d) => dayjs(d, "YYYY-MM-DD", true).isValid();
+const isValidDate = (d) => dayjs(d).isValid();
 
 export function setupPlantsApi(app) {
   app.get("/api/plants", (req, res) => {
@@ -56,6 +56,10 @@ export function setupPlantsApi(app) {
       errors.push({ error: "'name' must be specified" });
     }
 
+    if (name.toUpperCase() === name) {
+      errors.push({ error: "'name' must not contain only uppercase letters" });
+    }
+
     if (!location) {
       errors.push({ error: "'location' must be an non-empty string" });
     }
@@ -64,7 +68,7 @@ export function setupPlantsApi(app) {
       if (!isValidDate(lastWatered)) {
         errors.push({
           error:
-            "'lastWatered' must be undefined OR a date in format 'YYYY-MM-DD",
+            "'lastWatered' must be undefined OR a date in format 'YYYY-MM-DD'",
         });
       }
     }
@@ -92,7 +96,7 @@ export function setupPlantsApi(app) {
       name,
       location,
       wateringInterval,
-      lastWatered: lastWatered || dayjs().format("YYYY-MM-DD"),
+      lastWatered,
       notes: notes || undefined,
     };
 
@@ -120,7 +124,7 @@ export function setupPlantsApi(app) {
       });
     }
 
-    const newLastWatered = req.body?.lastWatered;
+    const newLastWatered = req.body?.lastWatered || new Date().toISOString();
     if (!newLastWatered || !isValidDate(newLastWatered)) {
       return res.status(400).json({
         error: `Invalid lastWatered ${newLastWatered}. Please specify a date in format 'YYYY-MM-DD`,

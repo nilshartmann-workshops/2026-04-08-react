@@ -85,13 +85,21 @@ export const samplePlants = [
 export const sortPlants = (plants, sortBy, direction = "asc") => {
   const sortedPlants = [...plants]; // Shallow copy um Original nicht zu verändern
 
+  const safeParseInt = (a) => {
+    try {
+      return parseInt(a);
+    } catch {
+      return a;
+    }
+  };
+
   sortedPlants.sort((a, b) => {
     let valueA, valueB;
 
     switch (sortBy) {
       case "id":
-        valueA = a.id;
-        valueB = b.id;
+        valueA = safeParseInt(b.id);
+        valueB = safeParseInt(a.id);
         break;
       case "name":
         valueA = a.name.toLowerCase();

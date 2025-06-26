@@ -1,7 +1,12 @@
 export default function App() {
-  return (
-    <div>
-      <h1 className={"app-header"}>🌱 Hello React 👋 </h1>
-    </div>
-  );
+  // Wie kann eine TabBar-Komponente aussehen?
+  //
+  //  <TabBar>
+  //   <Tab>...</Tab>
+  //   <Tab>...</Tab>
+  //   <Panel>...</Panel>
+  //   <Panel>...</Panel>
+  // </TabBar>
+
+  return <div className={"AppContainer"}>todo</div>;
 }
