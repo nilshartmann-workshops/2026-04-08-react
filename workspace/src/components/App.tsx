@@ -1,24 +1,31 @@
 import { Panel, Tab, TabBar } from "./TabBar.tsx";
 import PlantList from "./PlantList.tsx";
 import PlantForm from "./PlantForm.tsx";
-import { useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 
 export default function App() {
-  const [tabId, setTabId] = useState("liste");
+
+  // Render Props
+
   return (
     <div className={"AppContainer"}>
       <TabBar>
-        <Tab tabId="liste" activeTabId={tabId} onTabChange={(tabId) => setTabId(tabId)}>Pflanzen Liste</Tab>
-        <Tab tabId="form" activeTabId={tabId} onTabChange={(tabId) => setTabId(tabId)}>Pflanze anlegen</Tab>
+        {(activeTabId, onTabChange ) => {
+          return <>
+          <Tab tabId="liste" activeTabId={activeTabId} onTabChange={onTabChange}>Pflanzen Liste</Tab>
+          <Tab tabId="form" activeTabId={activeTabId} onTabChange={onTabChange}>Pflanze anlegen</Tab>
 
-        <Panel tabId="liste" activeTabId={tabId}>
-          <PlantList />
-        </Panel>
+          <Panel tabId="liste" activeTabId={activeTabId}>
+            <PlantList />
+          </Panel>
 
-        <Panel tabId="form" activeTabId={tabId}>
-          <PlantForm />
-        </Panel>
-      </TabBar>
+          <Panel tabId="form" activeTabId={activeTabId}>
+            <PlantForm />
+          </Panel>
+        </>
+    }}
+    </TabBar>
+
     </div>
   );
 }
