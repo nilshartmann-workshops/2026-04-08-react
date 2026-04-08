@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { getDaysUntilWatering } from "./date-utils.ts";
+import { useFavoritesStore } from "./useFavoritesStore.ts";
 
 type PlantCardProps = {
   id: string;
@@ -17,6 +18,11 @@ export default function PlantCard({
   wateringInterval,
   lastWatered,
 }: PlantCardProps) {
+
+  const store = useFavoritesStore();
+  const isFavorite = store.favoriteIds.includes(id);
+
+
   const wateringInfo =
     wateringInterval === 1
       ? "Jeden Tag gießen!"
@@ -49,6 +55,9 @@ export default function PlantCard({
       <header>
         <h2>{name}</h2>
         <div>📍{location}</div>
+        <button
+        onClick={() => store.toggleFavorite(id)}
+        >{isFavorite ? "Favorit!" : "Kein Favorit :-("}</button>
       </header>
       <section>
         <div>{wateringInfo}</div>
