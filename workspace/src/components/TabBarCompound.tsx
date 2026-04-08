@@ -104,7 +104,7 @@ type PanelProps = {
  * Inhalt der zu einem Tab gehört.
  * Liest activeTabId aus dem Context.
  */
-export function Panel({ hidden, tabId, children }: PanelProps) {
+export function Panel({ tabId, children }: PanelProps) {
 
   const ctx = useTabBarContext();
 
