@@ -26,7 +26,9 @@ import { ReactNode } from "react";
  */
 
 type TabBarProps = {
-  // todo: children-Property
+  children: ReactNode;
+  // "Slot"
+  // title: ReactNode
 };
 
 /**
@@ -35,16 +37,18 @@ type TabBarProps = {
  * Äußerer Container der gesamten Tab-Navigation.
  * Rendert alle Kinder (Tabs und Panels).
  */
-export function TabBar(props: TabBarProps) {
-  return <div className="TabBar">todo! Kind-Elemente rendern</div>;
+export function TabBar({children}: TabBarProps) {
+  return <div className="TabBar">{children}</div>;
 }
 
 type TabProps = {
   tabId: string;
-  // todo: fehlende Properties:
-  // - activeTabId
-  // - onTabChange
-  // - children (für Button-Label)
+  activeTabId: string;
+  children: ReactNode;
+
+  // onClick(tabId: string): void;
+  // onTabClick(tabId: string): void;
+  onTabChange(tabId: string): void;
 };
 
 /**
@@ -54,16 +58,24 @@ type TabProps = {
  * Ist deaktiviert, wenn er dem aktiven Tab entspricht.
  * Beim Klick wird er zum aktiven Tab.
  */
-export function Tab({ tabId }: TabProps) {
+export function Tab({ tabId,activeTabId, onTabChange, children }: TabProps) {
   // todo:
   // - beim Klicken soll onTabChange aufgerufen werden
   // - Der Button soll disabled sein, wenn dieser Tab gerade aktiv ist
 
-  return <button className={"Tab"}>todo: label!</button>;
+  return (
+    <button className={"Tab"}
+            onClick={() => onTabChange(tabId)}
+            disabled={activeTabId === tabId}
+    >
+      {children}
+    </button>
+  );
 }
 
 type PanelProps = {
   tabId: string;
+  activeTabId: string;
   children: ReactNode;
 
   // todo Props:
@@ -80,9 +92,9 @@ type PanelProps = {
  * Inhalt der zu einem Tab gehört.
  * Wird nur angezeigt, wenn der zugehörige Tab aktiv ist.
  */
-export function Panel({ tabId, children }: PanelProps) {
-  // todo:
-  //   Panel-Inhalt nur rendern, wenn der zugehörige Tab aktiv ist!
-
-  return <div className="TabPanel">todo!</div>;
+export function Panel({ activeTabId, tabId, children }: PanelProps) {
+  if (activeTabId === tabId) {
+    return <div className="TabPanel">{children}</div>
+  }
+  return null;
 }
