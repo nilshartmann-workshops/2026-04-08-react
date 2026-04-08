@@ -82,10 +82,18 @@ export function Tab({ tabId, children }: TabProps) {
 
   const isActive = activeTabId === tabId;
 
+  // headless component
+  //
+  // tabId
+  // isActive
+  // onTabChange
+  // widthLeftColumn
+
   return (
     <button
-      onClick={() => onTabChange(tabId)}
       className={"Tab"}
+
+      onClick={() => onTabChange(tabId)}
       disabled={isActive}
     >
       {children}
