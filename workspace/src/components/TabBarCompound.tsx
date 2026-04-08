@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 /**
  * TabBarCompound
@@ -27,39 +27,42 @@ import { ReactNode } from "react";
  *   - Implementiere Tab und Panel so, dass sie den Context konsumieren
  */
 
-// todo: Definiere einen Typ für den Context-Wert
-//   - activeTabId: string
-//   - onTabChange: Funktion die eine tabId entgegennimmt
-type TabBarContextValue = {};
+type TabBarContextValue = {
+  activeTabId: string;
+  onTabChange(activeTabId: string): void
+};
 
-// todo: Erstelle den Context mit createContext
-//   - Erlaubte Werte: TabBarContextValue | null
-//   - null ist der initiale Wert (kein aktiver Tab außerhalb von TabBarCompound)
-//   -
+const TabBarContext = createContext<TabBarContextValue|null>(null);
 
-/**
- * Interner Hook für Tab und Panel.
- * Wirft einen Fehler, wenn er außerhalb von TabBarCompound verwendet wird
- *  (also wenn useContext null oder undefined zurückliefert)
- */
-function useTabBar() {}
+// Custom Hook
+function useTabBarContext() {
+  const tabBarContext = useContext(TabBarContext)
+
+  if (tabBarContext === null) {
+    throw new Error("Invalid context usage");
+  }
+
+  return tabBarContext;
+}
 
 type TabBarCompoundProps = {
   children: ReactNode;
 };
 
-/**
- * TabBarCompound
- *
- * Äußerer Container der Tab-Navigation.
- * Verwaltet den aktiven Tab-Zustand und stellt ihn über einen Context bereit.
- */
-export function TabBarCompound({ children }: TabBarCompoundProps) {
-  // todo:
-  // - Lege einen internen State für activeTabId an
-  // - Umschließe children mit <TabBarContext.Provider value={...}>
+export function TabBar({ children }: TabBarCompoundProps) {
 
-  return <div className="TabBar">{children}</div>;
+  const [tabId, setTabId] = useState("liste");
+  //                        ^^^  Hook-Funktion
+
+  const contextValue: TabBarContextValue = {
+    activeTabId: tabId,
+    onTabChange: setTabId
+  }
+
+
+  return <div className="TabBar">
+    <TabBarContext value={contextValue}>{children}</TabBarContext>
+  </div>;
 }
 
 type TabProps = {
@@ -74,9 +77,8 @@ type TabProps = {
  * Liest activeTabId und onTabChange aus dem Context.
  */
 export function Tab({ tabId, children }: TabProps) {
-  // todo: Lese activeTabId und onTabChange aus dem Context (useTabBar)
-  const activeTabId = "todo: aus dem context lesen";
-  const onTabChange: any = null; // todo: onTabChange aus dem Context verwenden ('any' entfernen)
+
+  const { activeTabId, onTabChange } = useTabBarContext();
 
   const isActive = activeTabId === tabId;
 
@@ -102,11 +104,11 @@ type PanelProps = {
  * Inhalt der zu einem Tab gehört.
  * Liest activeTabId aus dem Context.
  */
-export function Panel({ tabId, children }: PanelProps) {
-  // todo: Lese activeTabId aus dem Context
-  const activeTabId = "todo!";
+export function Panel({ hidden, tabId, children }: PanelProps) {
 
-  if (activeTabId !== tabId) {
+  const ctx = useTabBarContext();
+
+  if (ctx.activeTabId !== tabId) {
     return null;
   }
 
