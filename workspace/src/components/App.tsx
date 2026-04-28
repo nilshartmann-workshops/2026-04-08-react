@@ -1,8 +1,9 @@
 import PlantList from "./PlantList.tsx";
 import PlantForm from "./PlantForm.tsx";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Panel, Tab, TabBar } from "./TabBarCompound.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default function App() {
   return (
@@ -11,14 +12,18 @@ export default function App() {
         <Tab tabId="liste" >Pflanzen Liste</Tab>
         <Tab tabId="form" >Pflanze anlegen</Tab>
 
-        <Panel tabId="liste" >
-          <PlantList />
-        </Panel>
+        <ErrorBoundary fallback={<div>ERROR!!!!!</div>}>
+          <Panel tabId="liste" >
+              <PlantList />
+          </Panel>
 
-        <Panel tabId="form" >
-          <PlantForm />
-        </Panel>
+          <Panel tabId="form" >
+            <PlantForm />
+          </Panel>
+
+        </ErrorBoundary>
       </TabBar>
+
 
       <ReactQueryDevtools />
     </div>

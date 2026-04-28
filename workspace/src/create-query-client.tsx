@@ -9,7 +9,7 @@ export const createQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnMount: true, // true ist der Default
+        refetchOnMount: false, // true ist der Default
         refetchIntervalInBackground: false,
         refetchOnWindowFocus: false,
         retry: 0

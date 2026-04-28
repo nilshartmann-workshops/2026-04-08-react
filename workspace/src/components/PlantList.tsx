@@ -1,20 +1,44 @@
 import { Plant, PlantSchema } from "../types.ts";
 import PlantCardList from "./PlantCardList.tsx";
 import { useFavoritesStore } from "./useFavoritesStore.ts";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import AllPlantsList from "./AllPlantsList.tsx";
 import FavoritePlantsList from "./FavoritePlantsList.tsx";
+import PlantDetail from "./PlantDetails.tsx";
+import { Suspense } from "react";
+import { plantsQueryOptions } from "./plantsQueryOptions.ts";
+import { ErrorBoundary } from "react-error-boundary";
 
 
 
 export default function PlantList() {
 
+  // "Preloading" von Daten:
+  // const queryClient = useQueryClient();
+  // queryClient.ensureQueryData(plantsQueryOptions());
+  //
+  // <Route path="/search" component={<Search />} loader={
+  //    queryClient.ensureQueryData(plantsQueryOptions());
+  // }/>
+
 
   return (
       <div className={"PlantList"}>
 
-        <AllPlantsList />
-        <FavoritePlantsList />
+        <h1>Unsere Pflanzen...</h1>
+
+
+          <Suspense fallback={<div className={"PlantCard animate-pulse bg-green-400"}>Alle Pflanzen werden geladen...</div>}>
+            <AllPlantsList />
+          </Suspense>
+
+        <ErrorBoundary fallback={<h1>Schade, Laden nicht geklappt 🥺</h1>}>
+          <Suspense fallback={<div className={"PlantCard  animate-pulse bg-green-400"}>Lieblingspflanze wird geladen...</div>}>
+            <PlantDetail plantId={"1"} />
+          </Suspense>
+        {/*<FavoritePlantsList />*/}
+        </ErrorBoundary>
+
 
       </div>
   );

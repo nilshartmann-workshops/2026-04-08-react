@@ -8,6 +8,8 @@ export default function AllPlantsList() {
   const result = useSuspenseQuery(plantsQueryOptions())
   const allPlants = result.data;
 
+  // allPlants[600].name.toUpperCase()
+
   return  <div>
     <h2>Alle Pflanzen</h2>
     <PlantCardList plants={allPlants} />
