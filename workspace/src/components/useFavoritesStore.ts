@@ -1,13 +1,18 @@
 import { create } from "zustand/react";
 
 type FavoritesStore = {
-  favoriteIds: string[],
+  readonly favoriteIds: string[],
   toggleFavorite(id: string): void
+  resetFavorites(): void
 }
 
 export const useFavoritesStore = create<FavoritesStore>( (setState, getState) => {
   return {
-    favoriteIds: [],
+    favoriteIds: ["1"],
+
+    resetFavorites() {
+      setState({favoriteIds: []})
+    },
 
     // "Action"
     toggleFavorite(id) {
