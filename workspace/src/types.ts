@@ -9,3 +9,11 @@ export const PlantSchema = z.object({
 });
 
 export type Plant = z.infer<typeof PlantSchema>;
+
+// const myObject = loadFromServer();
+//
+// try {
+//   const validatedMyObject = PlantSchema.parse(myObject)
+// } catch (e) {
+//   // objekt ungültig...
+// }
