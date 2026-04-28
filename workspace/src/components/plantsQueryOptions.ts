@@ -9,7 +9,7 @@ export function plantsQueryOptions() {
       // const response = await fetch("http://localhost:7200/api/plants");
       // const allPlants = await response.json();
 
-      return fetch("http://localhost:7200/api/plants")
+      return fetch("http://localhost:7200/api/plants?slow=2000")
         .then(response => response.json())
         .then(json => PlantSchema
           .array()

@@ -7,9 +7,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 export default function App() {
   return (
     <div className={"AppContainer"}>
-      <TabBar>
+      <TabBar initialTab={"home"}>
+        <Tab tabId="home" >Home</Tab>
         <Tab tabId="liste" >Pflanzen Liste</Tab>
         <Tab tabId="form" >Pflanze anlegen</Tab>
+
+        <Panel tabId={"home"}>
+          <Home />
+        </Panel>
 
         <Panel tabId="liste" >
           <PlantList />
@@ -23,4 +28,14 @@ export default function App() {
       <ReactQueryDevtools />
     </div>
   );
+}
+
+function Home() {
+  return <div className={"flex flex-col gap-y-8"}>
+
+    <h2>Welcome to our plants!!!!</h2>
+
+    <p>🌱🌱🌱🌱🌱🌱🌱</p>
+
+  </div>
 }
