@@ -19,10 +19,8 @@ export default function PlantCard({
   lastWatered,
 }: PlantCardProps) {
 
-  useFavoritesStore( state => state.favoriteIds.length  )
-
-  const toggleFavorite = useFavoritesStore( store => store.toggleFavorite)
-  const isFavorite = useFavoritesStore( store => store.favoriteIds.includes(id) );
+  const store = useFavoritesStore();
+  const isFavorite = store.favoriteIds.includes(id);
 
 
   const wateringInfo =
@@ -58,7 +56,7 @@ export default function PlantCard({
         <h2>{name}</h2>
         <div>📍{location}</div>
         <button
-        onClick={() => toggleFavorite(id)}
+        onClick={() => store.toggleFavorite(id)}
         >{isFavorite ? "Favorit!" : "Kein Favorit :-("}</button>
       </header>
       <section>
