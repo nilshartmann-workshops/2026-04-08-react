@@ -46,17 +46,16 @@ function useTabBarContext() {
 }
 
 type TabBarCompoundProps = {
-  initialTab?: string;
   children: ReactNode;
 };
 
-export function TabBar({ initialTab, children }: TabBarCompoundProps) {
+export function TabBar({ children }: TabBarCompoundProps) {
 
-  const [tabId, setTabId] = useState(initialTab);
+  const [tabId, setTabId] = useState("liste");
   //                        ^^^  Hook-Funktion
 
   const contextValue: TabBarContextValue = {
-    activeTabId: tabId || "",
+    activeTabId: tabId,
     onTabChange: setTabId
   }
 
@@ -117,33 +116,9 @@ export function Panel({ tabId, children }: PanelProps) {
 
   const ctx = useTabBarContext();
 
-  const isVisible = ctx.activeTabId === tabId;
+  if (ctx.activeTabId !== tabId) {
+    return null;
+  }
 
-  const mode = isVisible ? "visible":"hidden";
-
-return <Activity mode={mode}>
-  <div className="TabPanel">{children}</div>
-</Activity> ;
-
-  // if (!isVisible) {
-  //   return null;
-  // }
-
-  // return <div className="TabPanel">{children}</div>;
-
+  return <div className="TabPanel">{children}</div>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

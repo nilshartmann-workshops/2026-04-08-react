@@ -7,6 +7,7 @@ import { plantsQueryOptions } from "./plantsQueryOptions.ts";
 export default function FavoritePlantsList() {
 
   const store = useFavoritesStore();
+
   const result = useSuspenseQuery(
     {
       ...plantsQueryOptions(),
