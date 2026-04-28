@@ -11,7 +11,7 @@ export default function PlantDetail({ plantId }: PlantDetail) {
   // Nur zeigen: Unterschiedliche Suspense Boundaries
 
   const { data: plant } = useSuspenseQuery({
-    queryKey: ["plants", plantId],
+    queryKey: ["plants", "details", plantId],
     async queryFn() {
       const data = await ky
         .get(`http://localhost:7200/api/plants/${plantId}`, { retry: 0 })

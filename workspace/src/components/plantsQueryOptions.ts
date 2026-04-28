@@ -3,7 +3,7 @@ import { queryOptions } from "@tanstack/react-query";
 
 export function plantsQueryOptions() {
   return queryOptions({
-    queryKey: ["plants"],
+    queryKey: ["plants", "list"],
     queryFn() {
 
       // const response = await fetch("http://localhost:7200/api/plants");

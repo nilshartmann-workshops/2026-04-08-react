@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 
 import { getDaysUntilWatering } from "./date-utils.ts";
 import { useFavoritesStore } from "./useFavoritesStore.ts";
+import { useMutation } from "@tanstack/react-query";
+import { plantsQueryOptions } from "./plantsQueryOptions.ts";
 
 type PlantCardProps = {
   id: string;
@@ -21,6 +23,29 @@ export default function PlantCard({
 
   const store = useFavoritesStore();
   const isFavorite = store.favoriteIds.includes(id);
+
+  const lastWateredMutation = useMutation({
+    async mutationFn() {
+      const payload = {
+        lastWatered: new Date().toISOString()
+      }
+
+      await fetch(`http://localhost:7200/api/plants/${id}/lastWatered?slow=5000`, {
+        method: "PUT",
+        headers: { "content-type": "application/json"},
+        body: JSON.stringify(payload)
+      })
+
+      return;
+    },
+    onSuccess(a, b, c, context) {
+      context.client.invalidateQueries({
+        queryKey: ["plants"]
+      })
+    }
+  })
+
+
 
 
   const wateringInfo =
@@ -63,7 +88,17 @@ export default function PlantCard({
         <div>{wateringInfo}</div>
         {lastWateredMsg}
         {wateringMsg}
+        <button type={"button"}
+                className={"primary"}
+                disabled={lastWateredMutation.isPending}
+          onClick={() => lastWateredMutation.mutate()}
+        >{lastWateredMutation.isPending ?
+          "Es wird gegossen!" :
+          "Jetzt gegossen! Ich schwör'!"}</button>
       </section>
+
+      {lastWateredMutation.isSuccess && "Es wurde gegossen!"}
+
     </div>
   );
 }

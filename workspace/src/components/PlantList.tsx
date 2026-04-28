@@ -24,19 +24,25 @@ export default function PlantList() {
 
   return (
       <div className={"PlantList"}>
+        <ErrorBoundary
+          onError={err => {
+            console.error("Fehler", err.message, err.message, err.stack)
+          }}
+          fallback={<h1>Schade, Laden nicht geklappt 🥺</h1>}>
+            <Suspense fallback={<div className={"PlantCard animate-pulse bg-green-400"}>Alle Pflanzen werden geladen...</div>}>
+              <AllPlantsList />
+            </Suspense>
 
-        <h1>Unsere Pflanzen...</h1>
+            <Suspense fallback={<div className={"PlantCard  animate-pulse bg-green-400"}>Lieblingspflanze wird geladen...</div>}>
+              <div className={"flex flex-col"}>
+                <PlantDetail plantId={"10"} />
+                <PlantDetail plantId={"9"} />
+              </div>
+
+            </Suspense>
 
 
-          <Suspense fallback={<div className={"PlantCard animate-pulse bg-green-400"}>Alle Pflanzen werden geladen...</div>}>
-            <AllPlantsList />
-          </Suspense>
 
-        <ErrorBoundary fallback={<h1>Schade, Laden nicht geklappt 🥺</h1>}>
-          <Suspense fallback={<div className={"PlantCard  animate-pulse bg-green-400"}>Lieblingspflanze wird geladen...</div>}>
-            <PlantDetail plantId={"1"} />
-          </Suspense>
-        {/*<FavoritePlantsList />*/}
         </ErrorBoundary>
 
 

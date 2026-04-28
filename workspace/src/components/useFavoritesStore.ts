@@ -7,7 +7,7 @@ type FavoritesStore = {
 
 export const useFavoritesStore = create<FavoritesStore>( (setState, getState) => {
   return {
-    favoriteIds: [],
+    favoriteIds: ["10", "9"],
 
     // "Action"
     toggleFavorite(id) {
