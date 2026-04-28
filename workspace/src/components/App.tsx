@@ -2,6 +2,7 @@ import PlantList from "./PlantList.tsx";
 import PlantForm from "./PlantForm.tsx";
 import { useState } from "react";
 import { Panel, Tab, TabBar } from "./TabBarCompound.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
           <PlantForm />
         </Panel>
       </TabBar>
+
+      <ReactQueryDevtools />
     </div>
   );
 }
