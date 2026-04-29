@@ -4,7 +4,6 @@ import { getDaysUntilWatering } from "../shared/date-utils.ts";
 import { useFavoritesStore } from "./useFavoritesStore.ts";
 import { useMutation } from "@tanstack/react-query";
 import { plantsQueryOptions } from "./plantsQueryOptions.ts";
-import PlantForm from "../plant-form/PlantForm.tsx";
 
 type PlantCardProps = {
   id: string;
@@ -81,7 +80,6 @@ export default function PlantCard({
 
   return (
     <div className={"PlantCard"}>
-      <PlantForm />
       <header>
         <h2>{name}</h2>
         <div>📍{location}</div>
