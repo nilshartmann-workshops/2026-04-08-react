@@ -33,13 +33,13 @@ export default function PlantList() {
               <AllPlantsList />
             </Suspense>
 
-            <Suspense fallback={<div className={"PlantCard  animate-pulse bg-green-400"}>Lieblingspflanze wird geladen...</div>}>
-              <div className={"flex flex-col"}>
-                <PlantDetail plantId={"10"} />
-                <PlantDetail plantId={"9"} />
-              </div>
+            {/*<Suspense fallback={<div className={"PlantCard  animate-pulse bg-green-400"}>Lieblingspflanze wird geladen...</div>}>*/}
+            {/*  <div className={"flex flex-col"}>*/}
+            {/*    <PlantDetail plantId={"10"} />*/}
+            {/*    <PlantDetail plantId={"9"} />*/}
+            {/*  </div>*/}
 
-            </Suspense>
+            {/*</Suspense>*/}
 
 
 

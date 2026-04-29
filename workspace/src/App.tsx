@@ -2,7 +2,7 @@ import PlantForm from "./plant-form/PlantForm.tsx";
 import { Panel, Tab, TabBar } from "./shared/TabBarCompound.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
-import PlantList from "./plant-liste/PlantList.tsx";
+import PlantList from "./plant-list/PlantList.tsx";
 
 export default function App() {
   return (

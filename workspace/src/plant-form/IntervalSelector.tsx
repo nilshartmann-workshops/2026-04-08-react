@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useId } from "react";
 
 type IntervalSelectorProps = {
   interval?: number;
@@ -18,14 +18,11 @@ export default function IntervalSelector({
 
   // Validierung (z.B. keine negativen Zahlen) machen wir später
 
+  const id = useId();
+
   return (
     <div className={""}>
-      <label>Interval</label>
-      <input
-        type={"number"}
-        value={interval || ""}
-        onChange={handleIntervalChange}
-      />
+      <h2>Interval Selector</h2>
       <button
         type="button"
         className={"sm"}
@@ -47,6 +44,14 @@ export default function IntervalSelector({
       >
         Biweekly
       </button>
+      <input
+        id={id}
+        type={"number"}
+        value={interval || ""}
+        onChange={handleIntervalChange}
+      />
+      <label htmlFor={id}>Interval</label>
+
       {interval !== undefined && (
         <div className={"px-1 text-sm"}>Alle {interval} Tage gießen</div>
       )}
