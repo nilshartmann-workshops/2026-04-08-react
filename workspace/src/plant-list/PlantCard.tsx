@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 
-import { getDaysUntilWatering } from "./date-utils.ts";
+import { getDaysUntilWatering } from "../shared/date-utils.ts";
 import { useFavoritesStore } from "./useFavoritesStore.ts";
 import { useMutation } from "@tanstack/react-query";
 import { plantsQueryOptions } from "./plantsQueryOptions.ts";
+import PlantForm from "../plant-form/PlantForm.tsx";
 
 type PlantCardProps = {
   id: string;
@@ -12,6 +13,9 @@ type PlantCardProps = {
   wateringInterval: number;
   lastWatered?: string;
 };
+
+// "Co-Location"
+//   MVC <-- Komponente
 
 export default function PlantCard({
   id,
@@ -77,6 +81,7 @@ export default function PlantCard({
 
   return (
     <div className={"PlantCard"}>
+      <PlantForm />
       <header>
         <h2>{name}</h2>
         <div>📍{location}</div>

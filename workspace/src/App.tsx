@@ -1,9 +1,8 @@
-import PlantList from "./PlantList.tsx";
-import PlantForm from "./PlantForm.tsx";
-import { Suspense, useState } from "react";
-import { Panel, Tab, TabBar } from "./TabBarCompound.tsx";
+import PlantForm from "./plant-form/PlantForm.tsx";
+import { Panel, Tab, TabBar } from "./shared/TabBarCompound.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
+import PlantList from "./plant-liste/PlantList.tsx";
 
 export default function App() {
   return (

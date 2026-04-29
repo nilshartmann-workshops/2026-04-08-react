@@ -14,15 +14,38 @@ const enableImportRules = false;
 
 const importRules = enableImportRules
   ? {
-      "unused-imports/no-unused-imports": "error",
-      "simple-import-sort/imports": "error",
-      "import/first": "error",
-      "import/newline-after-import": "error",
-      "import/no-duplicates": "error",
-    }
+    "unused-imports/no-unused-imports": "error",
+    "simple-import-sort/imports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+  }
   : {};
 export default tseslint.config(
   { ignores: ["dist", "public/mockServiceWorker.js", "src/routeTree.gen.ts"] },
+  {
+    plugins: { boundaries },
+    settings: {
+      "boundaries/elements": [
+        { type: "plant-list", pattern: "src/plant-list/*" },
+        { type: "plant-form", pattern: "src/plant-form/*" },
+        { type: "shared", pattern: "src/shared/*" },
+      ],
+    },
+    rules: {
+      "boundaries/element-types": [
+        "error",
+        {
+          default: "disallow",
+          rules: [
+            { from: "plant-list", allow: ["plant-list", "shared"] },
+            { from: "plant-form", allow: ["plant-form", "shared"] },
+            { from: "shared", allow: ["shared"] },
+          ],
+        },
+      ],
+    },
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -40,14 +63,9 @@ export default tseslint.config(
     },
     settings: {
       "boundaries/elements": [
-        /* todo 'src' entfernen, deine Pattern hier eintragen für die Typen mit
-         * den entsprechenden Pattern:
-         *
-         *   plant-list
-         *   plant-form
-         *   shared
-         */
-        { type: "src", pattern: "src/*" },
+        { type: "plant-list", pattern: "plant-list" },
+        { type: "plant-form", pattern: "plant-form" },
+        { type: "shared", pattern: "shared" },
       ],
     },
     rules: {
@@ -70,9 +88,11 @@ export default tseslint.config(
         "error",
         {
           // todo: 'default' auf 'disallow' setzen
-          default: "allow",
+          default: "disallow",
           rules: [
-            /* todo: deine Regel eintragen */
+            { from: "plant-list", allow: ["plant-list", "shared"] },
+            { from: "plant-form", allow: ["plant-form", "shared"] },
+            { from: "shared", allow: ["shared"] },
           ],
         },
       ],
